@@ -35,7 +35,7 @@ namespace Visit.DAL
                     DoctorID = info.DoctorID,
                     CodeNezamPezeshki = info.CodeNezamPezeshki,
                 };
-                db.Tbl_Doctors.InsertOnSubmit(tbl_Doctor);
+                db.Tbl_Doctors.Add(tbl_Doctor);
                 db.SaveChanges();
                 return true;
             }
