@@ -92,7 +92,7 @@ namespace Visit.DAL
         {
             try
             {
-                var doctor = db.Tbl_Doctors.Select(d => new DoctorDto()
+                var doctor = db.Tbl_Doctors.AsNoTracking().Select(d => new DoctorDto()
                 {
                     DoctorID = d.DoctorID,
                     FirstName = d.Tbl_User.FirstName,
@@ -114,11 +114,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (id == 0)
             {
-                duplicate = db.Tbl_Users.Where(x => x.MobileNumber == mobile).Any();
+                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.MobileNumber == mobile).Any();
             }
             else
             {
-                duplicate = db.Tbl_Users.Where(x => x.MobileNumber == mobile && x.ID != id).Any();
+                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.MobileNumber == mobile && x.ID != id).Any();
             }
             return duplicate;
         }
@@ -127,11 +127,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (id == 0)
             {
-                duplicate = db.Tbl_Users.Where(x => x.Email == email).Any();
+                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.Email == email).Any();
             }
             else
             {
-                duplicate = db.Tbl_Users.Where(x => x.Email == email && x.ID != id).Any();
+                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.Email == email && x.ID != id).Any();
             }
             return duplicate;
         }
@@ -140,11 +140,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (doctorID == 0)
             {
-                duplicate = db.Tbl_Doctors.Where(x => x.CodeNezamPezeshki == nezamPezeshki).Any();
+                duplicate = db.Tbl_Doctors.AsNoTracking().Where(x => x.CodeNezamPezeshki == nezamPezeshki).Any();
             }
             else
             {
-                duplicate = db.Tbl_Doctors.Where(x => x.CodeNezamPezeshki == nezamPezeshki && x.DoctorID != doctorID).Any();
+                duplicate = db.Tbl_Doctors.AsNoTracking().Where(x => x.CodeNezamPezeshki == nezamPezeshki && x.DoctorID != doctorID).Any();
             }
             return duplicate;
         }

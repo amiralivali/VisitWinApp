@@ -114,11 +114,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (bimarID == 0)
             {
-                duplicate = db.Tbl_Bimars.Where(x => x.NationalCode == nc).Any();
+                duplicate = db.Tbl_Bimars.AsNoTracking().Where(x => x.NationalCode == nc).Any();
             }
             else
             {
-                duplicate = db.Tbl_Bimars.Where(x => x.NationalCode == nc && x.BimarID != bimarID).Any();
+                duplicate = db.Tbl_Bimars.AsNoTracking().Where(x => x.NationalCode == nc && x.BimarID != bimarID).Any();
             }
             return duplicate;
         }
@@ -127,11 +127,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (id == 0)
             {
-                duplicate = db.Tbl_Users.Where(x => x.MobileNumber == mobile).Any();
+                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.MobileNumber == mobile).Any();
             }
             else
             {
-                duplicate = db.Tbl_Users.Where(x => x.MobileNumber == mobile && x.ID != id).Any();
+                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.MobileNumber == mobile && x.ID != id).Any();
             }
             return duplicate;
         }
@@ -140,11 +140,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (id == 0)
             {
-                duplicate = db.Tbl_Users.Where(x => x.Email == email).Any();
+                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.Email == email).Any();
             }
             else
             {
-                duplicate = db.Tbl_Users.Where(x => x.Email == email && x.ID != id).Any();
+                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.Email == email && x.ID != id).Any();
             }
             return duplicate;
         }
