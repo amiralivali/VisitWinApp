@@ -13,13 +13,13 @@ namespace Visit.DAL
         }
 
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<Tbl_Bimar> Tbl_Bimar { get; set; }
-        public virtual DbSet<Tbl_Chat> Tbl_Chat { get; set; }
-        public virtual DbSet<Tbl_Doctor> Tbl_Doctor { get; set; }
+        public virtual DbSet<Tbl_Bimar> Tbl_Bimars { get; set; }
+        public virtual DbSet<Tbl_Chat> Tbl_Chats { get; set; }
+        public virtual DbSet<Tbl_Doctor> Tbl_Doctors { get; set; }
         public virtual DbSet<Tbl_Doctor_Takhasos> Tbl_Doctor_Takhasos { get; set; }
         public virtual DbSet<Tbl_Takhasos> Tbl_Takhasos { get; set; }
-        public virtual DbSet<Tbl_User> Tbl_User { get; set; }
-        public virtual DbSet<Tbl_Visit> Tbl_Visit { get; set; }
+        public virtual DbSet<Tbl_User> Tbl_Users { get; set; }
+        public virtual DbSet<Tbl_Visit> Tbl_Visits { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

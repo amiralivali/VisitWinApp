@@ -1,0 +1,6 @@
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.Shared\bin\Debug\Visit.Shared.dll
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.Shared\bin\Debug\Visit.Shared.pdb
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.Shared\obj\Debug\Visit.Shared.csproj.AssemblyReference.cache
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.Shared\obj\Debug\Visit.Shared.csproj.CoreCompileInputs.cache
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.Shared\obj\Debug\Visit.Shared.dll
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.Shared\obj\Debug\Visit.Shared.pdb

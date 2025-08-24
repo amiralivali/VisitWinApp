@@ -1,0 +1,2 @@
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\obj\Debug\Visit.DAL.csproj.AssemblyReference.cache
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\obj\Debug\Visit.DAL.csproj.CoreCompileInputs.cache
