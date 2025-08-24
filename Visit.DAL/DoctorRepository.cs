@@ -16,6 +16,7 @@ namespace Visit.DAL
         }
         public bool Insert(DoctorInfo info)
         {
+            var tran=db.Database.BeginTransaction();
             try
             {
                 Tbl_User tbl_User = new Tbl_User()
@@ -28,8 +29,7 @@ namespace Visit.DAL
                 };
                 db.Tbl_Users.Add(tbl_User);
                 db.SaveChanges();
-                var doctor = db.Tbl_Users.Where(d => d.MobileNumber == info.MobileNumber).Single();
-                info.DoctorID = doctor.ID;
+                info.DoctorID = tbl_User.ID;
                 Tbl_Doctor tbl_Doctor = new Tbl_Doctor()
                 {
                     DoctorID = info.DoctorID,
@@ -37,31 +37,37 @@ namespace Visit.DAL
                 };
                 db.Tbl_Doctors.Add(tbl_Doctor);
                 db.SaveChanges();
+                tran.Commit();
                 return true;
             }
             catch
             {
+                tran.Rollback();
                 return false;
             }
         }
         public bool Delete(int id)
         {
+            var tran= db.Database.BeginTransaction();
             try
             {
-                var doctor = db.Tbl_Users.Where(d => d.ID == id).Single();
-                var doctor2 = db.Tbl_Doctors.Where(d => d.DoctorID == id).Single();
-                db.Tbl_Users.Remove(doctor);
-                db.Tbl_Doctors.Remove(doctor2);
+                var user = db.Tbl_Users.Where(d => d.ID == id).Single();
+                var doctor = db.Tbl_Doctors.Where(d => d.DoctorID == id).Single();
+                db.Tbl_Users.Remove(user);
+                db.Tbl_Doctors.Remove(doctor);
                 db.SaveChanges();
+                tran.Commit();
                 return true;
             }
             catch
             {
+                tran.Rollback();
                 return false;
             }
         }
         public bool Update(DoctorInfo info)
         {
+            var tran = db.Database.BeginTransaction();
             try
             {
                 var doctor = db.Tbl_Users.Where(d => d.ID == info.DoctorID).Single();
@@ -73,10 +79,12 @@ namespace Visit.DAL
                 //doctor.Picture
                 doctor2.CodeNezamPezeshki = info.CodeNezamPezeshki;
                 db.SaveChanges();
+                tran.Commit();
                 return true;
             }
             catch
             {
+                tran.Rollback();
                 return false;
             }
         }

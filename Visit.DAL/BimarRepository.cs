@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Infrastructure.Interception;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +19,7 @@ namespace Visit.DAL
         }
         public bool Insert(BimarInfo info)
         {
+            var tran = db.Database.BeginTransaction();
             try
             {
                 Tbl_User tbl_User = new Tbl_User()
@@ -27,53 +31,60 @@ namespace Visit.DAL
                 };
                 db.Tbl_Users.Add(tbl_User);
                 db.SaveChanges();
-                var bimar = db.Tbl_Users.Where(b => b.MobileNumber == info.MobileNumber).Single();
-                info.BimarID = bimar.ID;
+                info.BimarID = tbl_User.ID;
                 Tbl_Bimar tbl_Bimar = new Tbl_Bimar();
                 tbl_Bimar.BimarID = info.BimarID;
                 tbl_Bimar.NationalCode = info.NationalCode;
                 db.Tbl_Bimars.Add(tbl_Bimar);
                 db.SaveChanges();
+                tran.Commit();
                 return true;
             }
             catch
             {
+                tran.Rollback();
                 return false;
             }
         }
         public bool Delete(int id)
         {
+            var tran = db.Database.BeginTransaction();
             try
             {
-                var bimar = db.Tbl_Users.Where(u => u.ID == id).Single();
-                db.Tbl_Users.Remove(bimar);
-                var bimar2 = db.Tbl_Bimars.Where(b => b.BimarID == id).Single();
-                db.Tbl_Bimars.Remove(bimar2);
+                var user = db.Tbl_Users.Where(u => u.ID == id).Single();
+                db.Tbl_Users.Remove(user);
+                var bimar = db.Tbl_Bimars.Where(b => b.BimarID == id).Single();
+                db.Tbl_Bimars.Remove(bimar);
                 db.SaveChanges();
+                tran.Commit();
                 return true;
             }
             catch
             {
+                tran.Rollback();
                 return false;
             }
         }
         public bool Update(BimarInfo info)
         {
+            var tran = db.Database.BeginTransaction();
             try
             {
-                var bimar = db.Tbl_Users.Where(b => b.ID == info.BimarID).Single();
-                bimar.FirstName = info.FirstName;
-                bimar.LastName = info.LastName;
-                bimar.MobileNumber = info.MobileNumber;
-                bimar.Email = info.Email;
-                //bimar.Picture=
-                var bimar2 = db.Tbl_Bimars.Where(b => b.BimarID == info.BimarID).Single();
-                bimar2.NationalCode = info.NationalCode;
+                var user = db.Tbl_Users.Where(b => b.ID == info.BimarID).Single();
+                user.FirstName = info.FirstName;
+                user.LastName = info.LastName;
+                user.MobileNumber = info.MobileNumber;
+                user.Email = info.Email;
+                //user.Picture=
+                var bimar = db.Tbl_Bimars.Where(b => b.BimarID == info.BimarID).Single();
+                bimar.NationalCode = info.NationalCode;
                 db.SaveChanges();
+                tran.Commit();
                 return true;
             }
             catch
             {
+                tran.Rollback();
                 return false;
             }
         }
@@ -81,7 +92,7 @@ namespace Visit.DAL
         {
             try
             {
-                var Bimars = db.Tbl_Bimars.Select(b => new BimarDto()
+                var Bimars = db.Tbl_Bimars.AsNoTracking().Select(b => new BimarDto()
                 {
                     BimarID = b.BimarID,
                     FirstName = b.Tbl_User.FirstName,
