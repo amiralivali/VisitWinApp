@@ -1,2 +1,14 @@
 C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\obj\Debug\Visit.DAL.csproj.AssemblyReference.cache
 C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\obj\Debug\Visit.DAL.csproj.CoreCompileInputs.cache
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\bin\Debug\Visit.DAL.dll.config
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\bin\Debug\Visit.DAL.dll
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\bin\Debug\Visit.DAL.pdb
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\bin\Debug\EntityFramework.dll
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\bin\Debug\Visit.Shared.dll
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\bin\Debug\Visit.Shared.pdb
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\bin\Debug\EntityFramework.xml
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\obj\Debug\Visit.DAL.csproj.Up2Date
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\obj\Debug\Visit.DAL.dll
+C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\obj\Debug\Visit.DAL.pdb
