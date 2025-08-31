@@ -12,3 +12,5 @@ C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\bin\Debug\EntityFramework.SqlSe
 C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\obj\Debug\Visit.DAL.csproj.Up2Date
 C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\obj\Debug\Visit.DAL.dll
 C:\Users\USer\Source\Repos\VisitWinApp\Visit.DAL\obj\Debug\Visit.DAL.pdb
+C:\Users\USer\source\repos\VisitWinApp\Visit.DAL\obj\Debug\Visit.DAL.Migrations.CreateDb.resources
+C:\Users\USer\source\repos\VisitWinApp\Visit.DAL\obj\Debug\Visit.DAL.csproj.GenerateResource.cache

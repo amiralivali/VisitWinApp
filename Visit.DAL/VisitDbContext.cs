@@ -76,7 +76,7 @@ namespace Visit.DAL
             modelBuilder.Entity<User>()
                 .HasMany(e => e.Chats1)
                 .WithRequired(e => e.User1)
-                .HasForeignKey(e => e.FromID)
+                .HasForeignKey(e => e.ToID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
