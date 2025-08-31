@@ -8,7 +8,7 @@ namespace Visit.DAL
     public partial class VisitDbContext : DbContext
     {
         public VisitDbContext()
-            : base("name=VisitDbContext")
+            : base("data source=.;initial catalog=Visit;integrated security=True;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework")
         {
         }
 
