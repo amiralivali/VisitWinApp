@@ -70,14 +70,14 @@ namespace Visit.DAL
             var tran = db.Database.BeginTransaction();
             try
             {
-                var doctor = db.Tbl_Users.Where(d => d.ID == info.DoctorID).Single();
-                var doctor2 = db.Tbl_Doctors.Where(d => d.DoctorID == info.DoctorID).Single();
-                doctor.FirstName = info.FirstName;
-                doctor.LastName = info.LastName;
-                doctor.MobileNumber = info.MobileNumber;
-                doctor.Email = info.Email;
+                var user = db.Tbl_Users.Where(d => d.ID == info.DoctorID).Single();
+                var doctor = db.Tbl_Doctors.Where(d => d.DoctorID == info.DoctorID).Single();
+                user.FirstName = info.FirstName;
+                user.LastName = info.LastName;
+                user.MobileNumber = info.MobileNumber;
+                user.Email = info.Email;
                 //doctor.Picture
-                doctor2.CodeNezamPezeshki = info.CodeNezamPezeshki;
+                doctor.CodeNezamPezeshki = info.CodeNezamPezeshki;
                 db.SaveChanges();
                 tran.Commit();
                 return true;
