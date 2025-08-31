@@ -22,20 +22,20 @@ namespace Visit.DAL
             var tran = db.Database.BeginTransaction();
             try
             {
-                Tbl_User tbl_User = new Tbl_User()
+                User tbl_User = new User()
                 {
                     FirstName = info.FirstName,
                     LastName = info.LastName,
                     MobileNumber = info.MobileNumber,
                     Email = info.Email,
                 };
-                db.Tbl_Users.Add(tbl_User);
+                db.Users.Add(tbl_User);
                 db.SaveChanges();
                 info.BimarID = tbl_User.ID;
-                Tbl_Bimar tbl_Bimar = new Tbl_Bimar();
+                Bimar tbl_Bimar = new Bimar();
                 tbl_Bimar.BimarID = info.BimarID;
                 tbl_Bimar.NationalCode = info.NationalCode;
-                db.Tbl_Bimars.Add(tbl_Bimar);
+                db.Bimars.Add(tbl_Bimar);
                 db.SaveChanges();
                 tran.Commit();
                 return true;
@@ -51,10 +51,10 @@ namespace Visit.DAL
             var tran = db.Database.BeginTransaction();
             try
             {
-                var user = db.Tbl_Users.Where(u => u.ID == id).Single();
-                db.Tbl_Users.Remove(user);
-                var bimar = db.Tbl_Bimars.Where(b => b.BimarID == id).Single();
-                db.Tbl_Bimars.Remove(bimar);
+                var user = db.Users.Where(u => u.ID == id).Single();
+                db.Users.Remove(user);
+                var bimar = db.Bimars.Where(b => b.BimarID == id).Single();
+                db.Bimars.Remove(bimar);
                 db.SaveChanges();
                 tran.Commit();
                 return true;
@@ -70,13 +70,13 @@ namespace Visit.DAL
             var tran = db.Database.BeginTransaction();
             try
             {
-                var user = db.Tbl_Users.Where(b => b.ID == info.BimarID).Single();
+                var user = db.Users.Where(b => b.ID == info.BimarID).Single();
                 user.FirstName = info.FirstName;
                 user.LastName = info.LastName;
                 user.MobileNumber = info.MobileNumber;
                 user.Email = info.Email;
                 //user.Picture=
-                var bimar = db.Tbl_Bimars.Where(b => b.BimarID == info.BimarID).Single();
+                var bimar = db.Bimars.Where(b => b.BimarID == info.BimarID).Single();
                 bimar.NationalCode = info.NationalCode;
                 db.SaveChanges();
                 tran.Commit();
@@ -92,11 +92,11 @@ namespace Visit.DAL
         {
             try
             {
-                var Bimars = db.Tbl_Bimars.AsNoTracking().Select(b => new BimarDto()
+                var Bimars = db.Bimars.AsNoTracking().Select(b => new BimarDto()
                 {
                     BimarID = b.BimarID,
-                    FirstName = b.Tbl_User.FirstName,
-                    LastName = b.Tbl_User.LastName,
+                    FirstName = b.User.FirstName,
+                    LastName = b.User.LastName,
                     NationalCode = b.NationalCode,
                 }).ToList();
                 return Bimars.Where(b => search == "" ||
@@ -114,11 +114,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (bimarID == 0)
             {
-                duplicate = db.Tbl_Bimars.AsNoTracking().Where(x => x.NationalCode == nc).Any();
+                duplicate = db.Bimars.AsNoTracking().Where(x => x.NationalCode == nc).Any();
             }
             else
             {
-                duplicate = db.Tbl_Bimars.AsNoTracking().Where(x => x.NationalCode == nc && x.BimarID != bimarID).Any();
+                duplicate = db.Bimars.AsNoTracking().Where(x => x.NationalCode == nc && x.BimarID != bimarID).Any();
             }
             return duplicate;
         }
@@ -127,11 +127,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (id == 0)
             {
-                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.MobileNumber == mobile).Any();
+                duplicate = db.Users.AsNoTracking().Where(x => x.MobileNumber == mobile).Any();
             }
             else
             {
-                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.MobileNumber == mobile && x.ID != id).Any();
+                duplicate = db.Users.AsNoTracking().Where(x => x.MobileNumber == mobile && x.ID != id).Any();
             }
             return duplicate;
         }
@@ -140,11 +140,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (id == 0)
             {
-                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.Email == email).Any();
+                duplicate = db.Users.AsNoTracking().Where(x => x.Email == email).Any();
             }
             else
             {
-                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.Email == email && x.ID != id).Any();
+                duplicate = db.Users.AsNoTracking().Where(x => x.Email == email && x.ID != id).Any();
             }
             return duplicate;
         }

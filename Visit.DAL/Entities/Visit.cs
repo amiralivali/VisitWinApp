@@ -6,17 +6,21 @@ namespace Visit.DAL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Tbl_Doctor Takhasos")]
-    public partial class Tbl_Doctor_Takhasos
+    public partial class Visit
     {
         public int ID { get; set; }
 
         public int DoctorID { get; set; }
 
-        public byte TakhasosID { get; set; }
+        public int BimarID { get; set; }
 
-        public virtual Tbl_Doctor Tbl_Doctor { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime Date { get; set; }
 
-        public virtual Tbl_Takhasos Tbl_Takhasos { get; set; }
+        public TimeSpan Time { get; set; }
+
+        public virtual Bimar Bimar { get; set; }
+
+        public virtual Doctor Doctor { get; set; }
     }
 }

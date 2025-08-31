@@ -12,77 +12,76 @@ namespace Visit.DAL
         {
         }
 
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<Tbl_Bimar> Tbl_Bimars { get; set; }
-        public virtual DbSet<Tbl_Chat> Tbl_Chats { get; set; }
-        public virtual DbSet<Tbl_Doctor> Tbl_Doctors { get; set; }
-        public virtual DbSet<Tbl_Doctor_Takhasos> Tbl_Doctor_Takhasos { get; set; }
-        public virtual DbSet<Tbl_Takhasos> Tbl_Takhasos { get; set; }
-        public virtual DbSet<Tbl_User> Tbl_Users { get; set; }
-        public virtual DbSet<Tbl_Visit> Tbl_Visits { get; set; }
+        public virtual DbSet<Bimar> Bimars { get; set; }
+        public virtual DbSet<Chat> Chats { get; set; }
+        public virtual DbSet<Doctor> Doctors { get; set; }
+        public virtual DbSet<Doctor_Takhasos> Doctor_Takhasoses { get; set; }
+        public virtual DbSet<Takhasos> Takhasoses { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Visit> Visits { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Tbl_Bimar>()
+            modelBuilder.Entity<Bimar>()
                 .Property(e => e.NationalCode)
                 .IsFixedLength()
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tbl_Bimar>()
-                .HasMany(e => e.Tbl_Visit)
-                .WithRequired(e => e.Tbl_Bimar)
+            modelBuilder.Entity<Bimar>()
+                .HasMany(e => e.Visits)
+                .WithRequired(e => e.Bimar)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Tbl_Doctor>()
+            modelBuilder.Entity<Doctor>()
                 .Property(e => e.CodeNezamPezeshki)
                 .IsFixedLength()
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tbl_Doctor>()
-                .HasMany(e => e.Tbl_Doctor_Takhasos)
-                .WithRequired(e => e.Tbl_Doctor)
+            modelBuilder.Entity<Doctor>()
+                .HasMany(e => e.Doctor_Takhasoses)
+                .WithRequired(e => e.Doctor)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Tbl_Doctor>()
-                .HasMany(e => e.Tbl_Visit)
-                .WithRequired(e => e.Tbl_Doctor)
+            modelBuilder.Entity<Doctor>()
+                .HasMany(e => e.Visits)
+                .WithRequired(e => e.Doctor)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Tbl_Takhasos>()
-                .HasMany(e => e.Tbl_Doctor_Takhasos)
-                .WithRequired(e => e.Tbl_Takhasos)
+            modelBuilder.Entity<Takhasos>()
+                .HasMany(e => e.Doctor_Takhasoses)
+                .WithRequired(e => e.Takhasos)
                 .HasForeignKey(e => e.TakhasosID)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Tbl_User>()
+            modelBuilder.Entity<User>()
                 .Property(e => e.MobileNumber)
                 .IsFixedLength()
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tbl_User>()
+            modelBuilder.Entity<User>()
                 .Property(e => e.Email)
                 .IsFixedLength()
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tbl_User>()
-                .HasOptional(e => e.Tbl_Bimar)
-                .WithRequired(e => e.Tbl_User);
+            modelBuilder.Entity<User>()
+                .HasOptional(e => e.Bimar)
+                .WithRequired(e => e.User);
 
-            modelBuilder.Entity<Tbl_User>()
-                .HasMany(e => e.Tbl_Chat)
-                .WithRequired(e => e.Tbl_User)
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Chats)
+                .WithRequired(e => e.User)
                 .HasForeignKey(e => e.FromID)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Tbl_User>()
-                .HasMany(e => e.Tbl_Chat1)
-                .WithRequired(e => e.Tbl_User1)
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Chats1)
+                .WithRequired(e => e.User1)
                 .HasForeignKey(e => e.FromID)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Tbl_User>()
-                .HasOptional(e => e.Tbl_Doctor)
-                .WithRequired(e => e.Tbl_User);
+            modelBuilder.Entity<User>()
+                .HasOptional(e => e.Doctor)
+                .WithRequired(e => e.User);
         }
     }
 }

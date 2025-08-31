@@ -6,7 +6,7 @@ namespace Visit.DAL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Tbl_Chat
+    public partial class Chat
     {
         public int ID { get; set; }
 
@@ -21,8 +21,8 @@ namespace Visit.DAL
 
         public bool IsRead { get; set; }
 
-        public virtual Tbl_User Tbl_User { get; set; }
+        public virtual User User { get; set; }
 
-        public virtual Tbl_User Tbl_User1 { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

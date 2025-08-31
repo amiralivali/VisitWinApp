@@ -55,14 +55,13 @@
   <ItemGroup>
     <Compile Include="BimarRepository.cs" />
     <Compile Include="DoctorRepository.cs" />
-    <Compile Include="Entities\sysdiagram.cs" />
-    <Compile Include="Entities\Tbl_Bimar.cs" />
-    <Compile Include="Entities\Tbl_Chat.cs" />
-    <Compile Include="Entities\Tbl_Doctor.cs" />
-    <Compile Include="Entities\Tbl_Doctor_Takhasos.cs" />
-    <Compile Include="Entities\Tbl_Takhasos.cs" />
-    <Compile Include="Entities\Tbl_User.cs" />
-    <Compile Include="Entities\Tbl_Visit.cs" />
+    <Compile Include="Entities\Bimar.cs" />
+    <Compile Include="Entities\Chat.cs" />
+    <Compile Include="Entities\Doctor.cs" />
+    <Compile Include="Entities\Doctor_Takhasos.cs" />
+    <Compile Include="Entities\Takhasos.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\Visit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisitDbContext.cs" />
   </ItemGroup>

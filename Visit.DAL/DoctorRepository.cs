@@ -19,7 +19,7 @@ namespace Visit.DAL
             var tran=db.Database.BeginTransaction();
             try
             {
-                Tbl_User tbl_User = new Tbl_User()
+                User tbl_User = new User()
                 {
                     FirstName = info.FirstName,
                     LastName = info.LastName,
@@ -27,15 +27,15 @@ namespace Visit.DAL
                     Email = info.Email
                     //Picture
                 };
-                db.Tbl_Users.Add(tbl_User);
+                db.Users.Add(tbl_User);
                 db.SaveChanges();
                 info.DoctorID = tbl_User.ID;
-                Tbl_Doctor tbl_Doctor = new Tbl_Doctor()
+                Doctor tbl_Doctor = new Doctor()
                 {
                     DoctorID = info.DoctorID,
                     CodeNezamPezeshki = info.CodeNezamPezeshki,
                 };
-                db.Tbl_Doctors.Add(tbl_Doctor);
+                db.Doctors.Add(tbl_Doctor);
                 db.SaveChanges();
                 tran.Commit();
                 return true;
@@ -51,10 +51,10 @@ namespace Visit.DAL
             var tran= db.Database.BeginTransaction();
             try
             {
-                var user = db.Tbl_Users.Where(d => d.ID == id).Single();
-                var doctor = db.Tbl_Doctors.Where(d => d.DoctorID == id).Single();
-                db.Tbl_Users.Remove(user);
-                db.Tbl_Doctors.Remove(doctor);
+                var user = db.Users.Where(d => d.ID == id).Single();
+                var doctor = db.Doctors.Where(d => d.DoctorID == id).Single();
+                db.Users.Remove(user);
+                db.Doctors.Remove(doctor);
                 db.SaveChanges();
                 tran.Commit();
                 return true;
@@ -70,8 +70,8 @@ namespace Visit.DAL
             var tran = db.Database.BeginTransaction();
             try
             {
-                var user = db.Tbl_Users.Where(d => d.ID == info.DoctorID).Single();
-                var doctor = db.Tbl_Doctors.Where(d => d.DoctorID == info.DoctorID).Single();
+                var user = db.Users.Where(d => d.ID == info.DoctorID).Single();
+                var doctor = db.Doctors.Where(d => d.DoctorID == info.DoctorID).Single();
                 user.FirstName = info.FirstName;
                 user.LastName = info.LastName;
                 user.MobileNumber = info.MobileNumber;
@@ -92,11 +92,11 @@ namespace Visit.DAL
         {
             try
             {
-                var doctor = db.Tbl_Doctors.AsNoTracking().Select(d => new DoctorDto()
+                var doctor = db.Doctors.AsNoTracking().Select(d => new DoctorDto()
                 {
                     DoctorID = d.DoctorID,
-                    FirstName = d.Tbl_User.FirstName,
-                    LastName = d.Tbl_User.LastName,
+                    FirstName = d.User.FirstName,
+                    LastName = d.User.LastName,
                     CodeNezamPezeshki = d.CodeNezamPezeshki
                 }).ToList();
                 return doctor.Where(d => search == "" ||
@@ -114,11 +114,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (id == 0)
             {
-                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.MobileNumber == mobile).Any();
+                duplicate = db.Users.AsNoTracking().Where(x => x.MobileNumber == mobile).Any();
             }
             else
             {
-                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.MobileNumber == mobile && x.ID != id).Any();
+                duplicate = db.Users.AsNoTracking().Where(x => x.MobileNumber == mobile && x.ID != id).Any();
             }
             return duplicate;
         }
@@ -127,11 +127,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (id == 0)
             {
-                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.Email == email).Any();
+                duplicate = db.Users.AsNoTracking().Where(x => x.Email == email).Any();
             }
             else
             {
-                duplicate = db.Tbl_Users.AsNoTracking().Where(x => x.Email == email && x.ID != id).Any();
+                duplicate = db.Users.AsNoTracking().Where(x => x.Email == email && x.ID != id).Any();
             }
             return duplicate;
         }
@@ -140,11 +140,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (doctorID == 0)
             {
-                duplicate = db.Tbl_Doctors.AsNoTracking().Where(x => x.CodeNezamPezeshki == nezamPezeshki).Any();
+                duplicate = db.Doctors.AsNoTracking().Where(x => x.CodeNezamPezeshki == nezamPezeshki).Any();
             }
             else
             {
-                duplicate = db.Tbl_Doctors.AsNoTracking().Where(x => x.CodeNezamPezeshki == nezamPezeshki && x.DoctorID != doctorID).Any();
+                duplicate = db.Doctors.AsNoTracking().Where(x => x.CodeNezamPezeshki == nezamPezeshki && x.DoctorID != doctorID).Any();
             }
             return duplicate;
         }
