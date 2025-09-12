@@ -77,12 +77,12 @@ namespace Visit.BLL
                 }
             }
         }
-        public OprationResult Insert(DoctorInfo info)
+        public async Task<OprationResult> InsertAsync(DoctorInfo info)
         {
             var checkData = CheckData(info);
             if (checkData.IsSuccess)
             {
-                bool check = repository.Insert(info);
+                bool check = await repository.InsertAsync(info);
                 if (check)
                 {
                     return checkData;
@@ -97,12 +97,12 @@ namespace Visit.BLL
                 return checkData;
             }
         }
-        public OprationResult Update(DoctorInfo info)
+        public async Task<OprationResult> Update(DoctorInfo info)
         {
             var checkData = CheckData(info);
             if (checkData.IsSuccess)
             {
-                bool check = repository.Update(info);
+                bool check = await repository.UpdateAsync(info);
                 if (check)
                 {
                     return checkData;
@@ -117,9 +117,9 @@ namespace Visit.BLL
                 return checkData;
             }
         }
-        public OprationResult Delete(int id)
+        public async Task<OprationResult> DeleteAsync(int id)
         {
-            bool check = repository.Delete(id);
+            bool check = await repository.DeleteAsync(id);
             if (check)
             {
                 return OprationResult.Success(Messages.Delete);

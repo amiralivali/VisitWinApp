@@ -14,71 +14,80 @@ namespace Visit.DAL
         {
             db = new VisitDbContext();
         }
-        public bool Insert(DoctorInfo info)
-        {
-            var tran=db.Database.BeginTransaction();
-            try
-            {
-                User tbl_User = new User()
-                {
-                    FirstName = info.FirstName,
-                    LastName = info.LastName,
-                    MobileNumber = info.LastName,
-                    Email = info.Email
-                    //Picture
-                };
-                db.Users.Add(tbl_User);
-                db.SaveChanges();
-                info.DoctorID = tbl_User.ID;
-                Doctor tbl_Doctor = new Doctor()
-                {
-                    DoctorID = info.DoctorID,
-                    CodeNezamPezeshki = info.CodeNezamPezeshki,
-                };
-                db.Doctors.Add(tbl_Doctor);
-                db.SaveChanges();
-                tran.Commit();
-                return true;
-            }
-            catch
-            {
-                tran.Rollback();
-                return false;
-            }
-        }
-        public bool Delete(int id)
-        {
-            var tran= db.Database.BeginTransaction();
-            try
-            {
-                var user = db.Users.Where(d => d.ID == id).Single();
-                var doctor = db.Doctors.Where(d => d.DoctorID == id).Single();
-                db.Users.Remove(user);
-                db.Doctors.Remove(doctor);
-                db.SaveChanges();
-                tran.Commit();
-                return true;
-            }
-            catch
-            {
-                tran.Rollback();
-                return false;
-            }
-        }
-        public bool Update(DoctorInfo info)
+        public async Task<bool> InsertAsync(DoctorInfo info)
         {
             var tran = db.Database.BeginTransaction();
             try
             {
-                var user = db.Users.Where(d => d.ID == info.DoctorID).Single();
-                var doctor = db.Doctors.Where(d => d.DoctorID == info.DoctorID).Single();
-                user.FirstName = info.FirstName;
-                user.LastName = info.LastName;
-                user.MobileNumber = info.MobileNumber;
-                user.Email = info.Email;
-                //doctor.Picture
-                doctor.CodeNezamPezeshki = info.CodeNezamPezeshki;
-                db.SaveChanges();
+                await Task.Run(() =>
+                {
+                    User tbl_User = new User()
+                    {
+                        FirstName = info.FirstName,
+                        LastName = info.LastName,
+                        MobileNumber = info.LastName,
+                        Email = info.Email
+                        //Picture
+                    };
+                    db.Users.Add(tbl_User);
+                    db.SaveChanges();
+                    info.DoctorID = tbl_User.ID;
+                    Doctor tbl_Doctor = new Doctor()
+                    {
+                        DoctorID = info.DoctorID,
+                        CodeNezamPezeshki = info.CodeNezamPezeshki,
+                    };
+                    db.Doctors.Add(tbl_Doctor);
+                    db.SaveChangesAsync();
+                });
+                tran.Commit();
+                return true;
+            }
+            catch
+            {
+                tran.Rollback();
+                return false;
+            }
+        }
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var tran= db.Database.BeginTransaction();
+            try
+            {
+                await Task.Run(() =>
+                {
+                    var user = db.Users.Where(d => d.ID == id).Single();
+                    var doctor = db.Doctors.Where(d => d.DoctorID == id).Single();
+                    db.Users.Remove(user);
+                    db.Doctors.Remove(doctor);
+                    db.SaveChangesAsync();
+                });
+                tran.Commit();
+                return true;
+            }
+            catch
+            {
+                tran.Rollback();
+                return false;
+            }
+        }
+        public async Task<bool> UpdateAsync(DoctorInfo info)
+        {
+            var tran = db.Database.BeginTransaction();
+            try
+            {
+                await Task.Run(() =>
+                {
+                    var user = db.Users.Where(d => d.ID == info.DoctorID).Single();
+                    var doctor = db.Doctors.Where(d => d.DoctorID == info.DoctorID).Single();
+                    user.FirstName = info.FirstName;
+                    user.LastName = info.LastName;
+                    user.MobileNumber = info.MobileNumber;
+                    user.Email = info.Email;
+                    //doctor.Picture
+                    doctor.CodeNezamPezeshki = info.CodeNezamPezeshki;
+                    db.SaveChangesAsync();
+                });
                 tran.Commit();
                 return true;
             }
