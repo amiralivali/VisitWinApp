@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,27 +20,24 @@ namespace Visit.DAL
             var tran = db.Database.BeginTransaction();
             try
             {
-                await Task.Run(() =>
+                User tbl_User = new User()
                 {
-                    User tbl_User = new User()
-                    {
-                        FirstName = info.FirstName,
-                        LastName = info.LastName,
-                        MobileNumber = info.LastName,
-                        Email = info.Email
-                        //Picture
-                    };
-                    db.Users.Add(tbl_User);
-                    db.SaveChanges();
-                    info.DoctorID = tbl_User.ID;
-                    Doctor tbl_Doctor = new Doctor()
-                    {
-                        DoctorID = info.DoctorID,
-                        CodeNezamPezeshki = info.CodeNezamPezeshki,
-                    };
-                    db.Doctors.Add(tbl_Doctor);
-                    db.SaveChangesAsync();
-                });
+                    FirstName = info.FirstName,
+                    LastName = info.LastName,
+                    MobileNumber = info.LastName,
+                    Email = info.Email
+                    //Picture
+                };
+                db.Users.Add(tbl_User);
+                await db.SaveChangesAsync();
+                info.DoctorID = tbl_User.ID;
+                Doctor tbl_Doctor = new Doctor()
+                {
+                    DoctorID = info.DoctorID,
+                    CodeNezamPezeshki = info.CodeNezamPezeshki,
+                };
+                db.Doctors.Add(tbl_Doctor);
+                await db.SaveChangesAsync();
                 tran.Commit();
                 return true;
             }
@@ -54,14 +52,11 @@ namespace Visit.DAL
             var tran= db.Database.BeginTransaction();
             try
             {
-                await Task.Run(() =>
-                {
-                    var user = db.Users.Where(d => d.ID == id).Single();
-                    var doctor = db.Doctors.Where(d => d.DoctorID == id).Single();
-                    db.Users.Remove(user);
-                    db.Doctors.Remove(doctor);
-                    db.SaveChangesAsync();
-                });
+                var user = db.Users.Where(d => d.ID == id).Single();
+                var doctor = db.Doctors.Where(d => d.DoctorID == id).Single();
+                db.Users.Remove(user);
+                db.Doctors.Remove(doctor);
+                await db.SaveChangesAsync();
                 tran.Commit();
                 return true;
             }
@@ -76,18 +71,15 @@ namespace Visit.DAL
             var tran = db.Database.BeginTransaction();
             try
             {
-                await Task.Run(() =>
-                {
-                    var user = db.Users.Where(d => d.ID == info.DoctorID).Single();
-                    var doctor = db.Doctors.Where(d => d.DoctorID == info.DoctorID).Single();
-                    user.FirstName = info.FirstName;
-                    user.LastName = info.LastName;
-                    user.MobileNumber = info.MobileNumber;
-                    user.Email = info.Email;
-                    //doctor.Picture
-                    doctor.CodeNezamPezeshki = info.CodeNezamPezeshki;
-                    db.SaveChangesAsync();
-                });
+                var user = db.Users.Where(d => d.ID == info.DoctorID).Single();
+                var doctor = db.Doctors.Where(d => d.DoctorID == info.DoctorID).Single();
+                user.FirstName = info.FirstName;
+                user.LastName = info.LastName;
+                user.MobileNumber = info.MobileNumber;
+                user.Email = info.Email;
+                //doctor.Picture
+                doctor.CodeNezamPezeshki = info.CodeNezamPezeshki;
+                await db.SaveChangesAsync();
                 tran.Commit();
                 return true;
             }
@@ -97,18 +89,18 @@ namespace Visit.DAL
                 return false;
             }
         }
-        public List<DoctorDto> Select(string search)
+        public async Task<List<DoctorDto>> SelectAsync(string search)
         {
             try
             {
-                var doctor = db.Doctors.AsNoTracking().Select(d => new DoctorDto()
+                var doctors = await db.Doctors.AsNoTracking().Select(d => new DoctorDto()
                 {
                     DoctorID = d.DoctorID,
                     FirstName = d.User.FirstName,
                     LastName = d.User.LastName,
                     CodeNezamPezeshki = d.CodeNezamPezeshki
-                }).ToList();
-                return doctor.Where(d => search == "" ||
+                }).ToListAsync();
+                return doctors.Where(d => search == "" ||
                 d.FirstName.Contains(search) ||
                 d.LastName.Contains(search) ||
                 d.CodeNezamPezeshki.Contains(search)).ToList();
@@ -118,42 +110,42 @@ namespace Visit.DAL
                 return null;
             }
         }
-        public bool DuplicateMobile(string mobile, int id = 0)
+        public async Task<bool> DuplicateMobileAsync(string mobile, int id = 0)
         {
             bool duplicate = false;
             if (id == 0)
             {
-                duplicate = db.Users.AsNoTracking().Where(x => x.MobileNumber == mobile).Any();
+                duplicate = await db.Users.AsNoTracking().Where(x => x.MobileNumber == mobile).AnyAsync();
             }
             else
             {
-                duplicate = db.Users.AsNoTracking().Where(x => x.MobileNumber == mobile && x.ID != id).Any();
+                duplicate = await db.Users.AsNoTracking().Where(x => x.MobileNumber == mobile && x.ID != id).AnyAsync();
             }
             return duplicate;
         }
-        public bool DuplicateEmail(string email, int id = 0)
+        public async Task<bool> DuplicateEmailAsync(string email, int id = 0)
         {
             bool duplicate = false;
             if (id == 0)
             {
-                duplicate = db.Users.AsNoTracking().Where(x => x.Email == email).Any();
+                duplicate = await db.Users.AsNoTracking().Where(x => x.Email == email).AnyAsync();
             }
             else
             {
-                duplicate = db.Users.AsNoTracking().Where(x => x.Email == email && x.ID != id).Any();
+                duplicate = await db.Users.AsNoTracking().Where(x => x.Email == email && x.ID != id).AnyAsync();
             }
             return duplicate;
         }
-        public bool DuplicateNezam(string nezamPezeshki, int doctorID = 0)
+        public async Task<bool> DuplicateNezamAsync(string nezamPezeshki, int doctorID = 0)
         {
             bool duplicate = false;
             if (doctorID == 0)
             {
-                duplicate = db.Doctors.AsNoTracking().Where(x => x.CodeNezamPezeshki == nezamPezeshki).Any();
+                duplicate = await db.Doctors.AsNoTracking().Where(x => x.CodeNezamPezeshki == nezamPezeshki).AnyAsync();
             }
             else
             {
-                duplicate = db.Doctors.AsNoTracking().Where(x => x.CodeNezamPezeshki == nezamPezeshki && x.DoctorID != doctorID).Any();
+                duplicate = await db.Doctors.AsNoTracking().Where(x => x.CodeNezamPezeshki == nezamPezeshki && x.DoctorID != doctorID).AnyAsync();
             }
             return duplicate;
         }

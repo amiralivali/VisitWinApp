@@ -18,7 +18,7 @@ namespace Visit.BLL
             repository = new BimarRepository();
         }
 
-        public OprationResult CheckData(BimarInfo info)
+        public async Task<OprationResult> CheckData(BimarInfo info)
         {
             bool validationNum = valid.ValidationNumber(info.MobileNumber);
             bool validationNC = valid.ValidationNationalCode(info.NationalCode);
@@ -41,15 +41,15 @@ namespace Visit.BLL
             }
             if (info.BimarID > 0)//this if is for that I have to check the privious thing or not
             {
-                if (repository.DuplicateNationalCode(info.NationalCode, info.BimarID))
+                if (await repository.DuplicateNationalCodeAsync(info.NationalCode, info.BimarID))
                 {
                     return OprationResult.Duplicate(Messages.NationalCode);
                 }
-                else if (repository.DuplicateMobile(info.MobileNumber, info.BimarID))
+                else if (await repository.DuplicateMobileAsync(info.MobileNumber, info.BimarID))
                 {
                     return OprationResult.Duplicate(Messages.Mobile);
                 }
-                else if (string.IsNullOrEmpty(info.Email) == false && repository.DuplicateEmail(info.Email, info.BimarID))
+                else if (string.IsNullOrEmpty(info.Email) == false && await repository.DuplicateEmailAsync(info.Email, info.BimarID))
                 {
                     return OprationResult.Duplicate(Messages.Email);
                 }
@@ -60,15 +60,15 @@ namespace Visit.BLL
             }
             else
             {
-                if (repository.DuplicateNationalCode(info.NationalCode))
+                if (await repository.DuplicateNationalCodeAsync(info.NationalCode))
                 {
                     return OprationResult.Duplicate(Messages.NationalCode);
                 }
-                else if (repository.DuplicateMobile(info.MobileNumber))
+                else if (await repository.DuplicateMobileAsync(info.MobileNumber))
                 {
                     return OprationResult.Duplicate(Messages.Mobile);
                 }
-                else if (string.IsNullOrEmpty(info.Email) == false && repository.DuplicateEmail(info.Email))
+                else if (string.IsNullOrEmpty(info.Email) == false && await repository.DuplicateEmailAsync(info.Email))
                 {
                     return OprationResult.Duplicate(Messages.Email);
                 }
@@ -78,12 +78,12 @@ namespace Visit.BLL
                 }
             }
         }
-        public OprationResult Insert(BimarInfo info)
+        public async Task<OprationResult> InsertAsync(BimarInfo info)
         {
-            var checkData = CheckData(info);
+            var checkData = await CheckData(info);
             if (checkData.IsSuccess)
             {
-                bool check = repository.Insert(info);
+                bool check = await repository.InsertAsync(info);
                 if (check)
                 {
                     return checkData;
@@ -98,12 +98,12 @@ namespace Visit.BLL
                 return checkData;
             }
         }
-        public OprationResult Update(BimarInfo info)
+        public async Task<OprationResult> UpdateAsync(BimarInfo info)
         {
-            var checkData = CheckData(info);
+            var checkData = await CheckData(info);
             if (checkData.IsSuccess)
             {
-                bool check = repository.Update(info);
+                bool check = await repository.UpdateAsync(info);
                 if (check)
                 {
                     return checkData;
@@ -118,9 +118,9 @@ namespace Visit.BLL
                 return checkData;
             }
         }
-        public OprationResult Delete(int id)
+        public async Task<OprationResult> DeleteAsync(int id)
         {
-            bool check = repository.Delete(id);
+            bool check = await repository.DeleteAsync(id);
             if (check)
             {
                 return OprationResult.Success(Messages.Delete);
@@ -130,9 +130,9 @@ namespace Visit.BLL
                 return OprationResult.RunTimeError();
             }
         }
-        public OprationResult<List<BimarDto>> Select(string search)
+        public async Task<OprationResult<List<BimarDto>>> SelectAsync(string search)
         {
-            var Bimars = repository.Select(search);
+            var Bimars = await repository.SelectAsync(search);
             if (Bimars != null)
             {
                 return OprationResult<List<BimarDto>>.Succes(Bimars);

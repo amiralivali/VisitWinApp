@@ -17,7 +17,7 @@ namespace Visit.BLL
             valid = new ValidationLogic();
             repository = new DoctorRepository();
         }
-        public OprationResult CheckData(DoctorInfo info)
+        public async Task<OprationResult> CheckData(DoctorInfo info)
         {
             bool validationNum = valid.ValidationNumber(info.MobileNumber);
             bool validationNezam = valid.ValidationNezam(info.CodeNezamPezeshki);
@@ -40,15 +40,15 @@ namespace Visit.BLL
             }
             if (info.DoctorID > 0)
             {
-                if (repository.DuplicateNezam(info.CodeNezamPezeshki, info.DoctorID))
+                if (await repository.DuplicateNezamAsync(info.CodeNezamPezeshki, info.DoctorID))
                 {
                     return OprationResult.Duplicate(Messages.Nezam);
                 }
-                else if (repository.DuplicateMobile(info.MobileNumber, info.DoctorID))
+                else if (await repository.DuplicateMobileAsync(info.MobileNumber, info.DoctorID))
                 {
                     return OprationResult.Duplicate(Messages.Mobile);
                 }
-                else if (string.IsNullOrEmpty(info.Email) == false && repository.DuplicateEmail(info.Email, info.DoctorID))
+                else if (string.IsNullOrEmpty(info.Email) == false && await repository.DuplicateEmailAsync(info.Email, info.DoctorID))
                 {
                     return OprationResult.Duplicate(Messages.Email);
                 }
@@ -59,15 +59,15 @@ namespace Visit.BLL
             }
             else
             {
-                if (repository.DuplicateNezam(info.CodeNezamPezeshki))
+                if (await repository.DuplicateNezamAsync(info.CodeNezamPezeshki))
                 {
                     return OprationResult.Duplicate(Messages.Nezam);
                 }
-                else if (repository.DuplicateMobile(info.MobileNumber))
+                else if (await repository.DuplicateMobileAsync(info.MobileNumber))
                 {
                     return OprationResult.Duplicate(Messages.Mobile);
                 }
-                else if (string.IsNullOrEmpty(info.Email) == false && repository.DuplicateEmail(info.Email))
+                else if (string.IsNullOrEmpty(info.Email) == false && await repository.DuplicateEmailAsync(info.Email))
                 {
                     return OprationResult.Duplicate(Messages.Email);
                 }
@@ -79,7 +79,7 @@ namespace Visit.BLL
         }
         public async Task<OprationResult> InsertAsync(DoctorInfo info)
         {
-            var checkData = CheckData(info);
+            var checkData = await CheckData(info);
             if (checkData.IsSuccess)
             {
                 bool check = await repository.InsertAsync(info);
@@ -97,9 +97,9 @@ namespace Visit.BLL
                 return checkData;
             }
         }
-        public async Task<OprationResult> Update(DoctorInfo info)
+        public async Task<OprationResult> UpdateAsync(DoctorInfo info)
         {
-            var checkData = CheckData(info);
+            var checkData = await CheckData(info);
             if (checkData.IsSuccess)
             {
                 bool check = await repository.UpdateAsync(info);
@@ -129,9 +129,9 @@ namespace Visit.BLL
                 return OprationResult.RunTimeError();
             }
         }
-        public OprationResult<List<DoctorDto>> Select(string search = "")
+        public async Task<OprationResult<List<DoctorDto>>> SelectAsync(string search = "")
         {
-            var doctors = repository.Select(search);
+            var doctors = await repository.SelectAsync(search);
             if (doctors != null)
             {
                 return OprationResult<List<DoctorDto>>.Succes(doctors);
