@@ -66,6 +66,14 @@
     <Compile Include="Migrations\202508310337337_CreateDb.Designer.cs">
       <DependentUpon>202508310337337_CreateDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202509271815177_DeletePicture.cs" />
+    <Compile Include="Migrations\202509271815177_DeletePicture.Designer.cs">
+      <DependentUpon>202509271815177_DeletePicture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202509271816272_AddPicture.cs" />
+    <Compile Include="Migrations\202509271816272_AddPicture.Designer.cs">
+      <DependentUpon>202509271816272_AddPicture.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisitDbContext.cs" />
@@ -83,6 +91,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202508310337337_CreateDb.resx">
       <DependentUpon>202508310337337_CreateDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509271815177_DeletePicture.resx">
+      <DependentUpon>202509271815177_DeletePicture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509271816272_AddPicture.resx">
+      <DependentUpon>202509271816272_AddPicture.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
