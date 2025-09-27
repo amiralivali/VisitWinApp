@@ -45,6 +45,7 @@
     <Compile Include="BimarInfo.cs" />
     <Compile Include="DoctorDto.cs" />
     <Compile Include="DoctorInfo.cs" />
+    <Compile Include="ErrorException.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="OprationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

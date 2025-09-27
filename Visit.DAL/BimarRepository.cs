@@ -40,8 +40,9 @@ namespace Visit.DAL
                 tran.Commit();
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                ex.AddLog();
                 tran.Rollback();
                 return false;
             }
@@ -59,8 +60,9 @@ namespace Visit.DAL
                 tran.Commit();
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                ex.AddLog();
                 tran.Rollback();
                 return false;
             }
@@ -82,8 +84,9 @@ namespace Visit.DAL
                 tran.Commit();
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                ex.AddLog();
                 tran.Rollback();
                 return false;
             }
@@ -104,8 +107,9 @@ namespace Visit.DAL
                 b.LastName.Contains(search) ||
                 b.NationalCode.Contains(search)).ToList();
             }
-            catch
+            catch(Exception ex)
             {
+                ex.AddLog();
                 return null;
             }
         }
@@ -114,11 +118,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (bimarID == 0)
             {
-                duplicate = await db.Bimars.AsNoTracking().Where(x => x.NationalCode == nc).AnyAsync();
+                duplicate = await db.Bimars.Where(x => x.NationalCode == nc).AnyAsync();
             }
             else
             {
-                duplicate = await db.Bimars.AsNoTracking().Where(x => x.NationalCode == nc && x.BimarID != bimarID).AnyAsync();
+                duplicate = await db.Bimars.Where(x => x.NationalCode == nc && x.BimarID != bimarID).AnyAsync();
             }
             return duplicate;
         }
@@ -127,11 +131,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (id == 0)
             {
-                duplicate = await db.Users.AsNoTracking().Where(x => x.MobileNumber == mobile).AnyAsync();
+                duplicate = await db.Users.Where(x => x.MobileNumber == mobile).AnyAsync();
             }
             else
             {
-                duplicate = await db.Users.AsNoTracking().Where(x => x.MobileNumber == mobile && x.ID != id).AnyAsync();
+                duplicate = await db.Users.Where(x => x.MobileNumber == mobile && x.ID != id).AnyAsync();
             }
             return duplicate;
         }
@@ -140,11 +144,11 @@ namespace Visit.DAL
             bool duplicate = false;
             if (id == 0)
             {
-                duplicate = await db.Users.AsNoTracking().Where(x => x.Email == email).AnyAsync();
+                duplicate = await db.Users.Where(x => x.Email == email).AnyAsync();
             }
             else
             {
-                duplicate = await db.Users.AsNoTracking().Where(x => x.Email == email && x.ID != id).AnyAsync();
+                duplicate = await db.Users.Where(x => x.Email == email && x.ID != id).AnyAsync();
             }
             return duplicate;
         }
