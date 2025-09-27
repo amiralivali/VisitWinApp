@@ -17,25 +17,15 @@ namespace Visit.DAL
         {
             db = new VisitDbContext();
         }
-        public async Task<bool> InsertAsync(BimarInfo info)
+        public async Task<bool> InsertAsync(User user,Bimar bimar)
         {
             var tran = db.Database.BeginTransaction();
             try
             {
-                User tbl_User = new User()
-                {
-                    FirstName = info.FirstName,
-                    LastName = info.LastName,
-                    MobileNumber = info.MobileNumber,
-                    Email = info.Email,
-                };
-                db.Users.Add(tbl_User);
-                db.SaveChanges();
-                info.BimarID = tbl_User.ID;
-                Bimar tbl_Bimar = new Bimar();
-                tbl_Bimar.BimarID = info.BimarID;
-                tbl_Bimar.NationalCode = info.NationalCode;
-                db.Bimars.Add(tbl_Bimar);
+                db.Users.Add(user);
+                await db.SaveChangesAsync();
+                bimar.BimarID = user.ID;
+                db.Bimars.Add(bimar);
                 await db.SaveChangesAsync();
                 tran.Commit();
                 return true;
@@ -54,8 +44,6 @@ namespace Visit.DAL
             {
                 var user = db.Users.Where(u => u.ID == id).Single();
                 db.Users.Remove(user);
-                var bimar = db.Bimars.Where(b => b.BimarID == id).Single();
-                db.Bimars.Remove(bimar);
                 await db.SaveChangesAsync();
                 tran.Commit();
                 return true;

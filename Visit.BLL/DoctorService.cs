@@ -17,7 +17,7 @@ namespace Visit.BLL
             valid = new ValidationLogic();
             repository = new DoctorRepository();
         }
-        public async Task<OprationResult> CheckData(DoctorInfo info)
+        public async Task<OprationResult> CheckDataAsync(DoctorInfo info)
         {
             bool validationNum = valid.ValidationNumber(info.MobileNumber);
             bool validationNezam = valid.ValidationNezam(info.CodeNezamPezeshki);
@@ -79,10 +79,12 @@ namespace Visit.BLL
         }
         public async Task<OprationResult> InsertAsync(DoctorInfo info)
         {
-            var checkData = await CheckData(info);
+            var checkData = await CheckDataAsync(info);
             if (checkData.IsSuccess)
             {
-                bool check = await repository.InsertAsync(info);
+                User user = info.MapToUser();
+                Doctor doctor=info.MapToDoctor();
+                bool check = await repository.InsertAsync(user,doctor);
                 if (check)
                 {
                     return checkData;
@@ -99,7 +101,7 @@ namespace Visit.BLL
         }
         public async Task<OprationResult> UpdateAsync(DoctorInfo info)
         {
-            var checkData = await CheckData(info);
+            var checkData = await CheckDataAsync(info);
             if (checkData.IsSuccess)
             {
                 bool check = await repository.UpdateAsync(info);

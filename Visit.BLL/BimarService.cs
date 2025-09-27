@@ -18,7 +18,7 @@ namespace Visit.BLL
             repository = new BimarRepository();
         }
 
-        public async Task<OprationResult> CheckData(BimarInfo info)
+        public async Task<OprationResult> CheckDataAsync(BimarInfo info)
         {
             bool validationNum = valid.ValidationNumber(info.MobileNumber);
             bool validationNC = valid.ValidationNationalCode(info.NationalCode);
@@ -80,10 +80,12 @@ namespace Visit.BLL
         }
         public async Task<OprationResult> InsertAsync(BimarInfo info)
         {
-            var checkData = await CheckData(info);
+            var checkData = await CheckDataAsync(info);
             if (checkData.IsSuccess)
             {
-                bool check = await repository.InsertAsync(info);
+                User user = info.MapToUser();
+                Bimar bimar=info.MapToBimar();
+                bool check = await repository.InsertAsync(user,bimar);
                 if (check)
                 {
                     return checkData;
@@ -100,7 +102,7 @@ namespace Visit.BLL
         }
         public async Task<OprationResult> UpdateAsync(BimarInfo info)
         {
-            var checkData = await CheckData(info);
+            var checkData = await CheckDataAsync(info);
             if (checkData.IsSuccess)
             {
                 bool check = await repository.UpdateAsync(info);

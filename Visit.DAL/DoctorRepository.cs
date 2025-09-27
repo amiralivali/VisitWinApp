@@ -15,28 +15,15 @@ namespace Visit.DAL
         {
             db = new VisitDbContext();
         }
-        public async Task<bool> InsertAsync(DoctorInfo info)
+        public async Task<bool> InsertAsync(User user,Doctor doctor)
         {
             var tran = db.Database.BeginTransaction();
             try
             {
-                User tbl_User = new User()
-                {
-                    FirstName = info.FirstName,
-                    LastName = info.LastName,
-                    MobileNumber = info.LastName,
-                    Email = info.Email
-                    //Picture
-                };
-                db.Users.Add(tbl_User);
+                db.Users.Add(user);
                 await db.SaveChangesAsync();
-                info.DoctorID = tbl_User.ID;
-                Doctor tbl_Doctor = new Doctor()
-                {
-                    DoctorID = info.DoctorID,
-                    CodeNezamPezeshki = info.CodeNezamPezeshki,
-                };
-                db.Doctors.Add(tbl_Doctor);
+                doctor.DoctorID = user.ID;
+                db.Doctors.Add(doctor);
                 await db.SaveChangesAsync();
                 tran.Commit();
                 return true;
@@ -54,9 +41,7 @@ namespace Visit.DAL
             try
             {
                 var user = db.Users.Where(d => d.ID == id).Single();
-                var doctor = db.Doctors.Where(d => d.DoctorID == id).Single();
                 db.Users.Remove(user);
-                db.Doctors.Remove(doctor);
                 await db.SaveChangesAsync();
                 tran.Commit();
                 return true;
