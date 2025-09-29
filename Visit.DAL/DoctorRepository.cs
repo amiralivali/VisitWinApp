@@ -64,7 +64,7 @@ namespace Visit.DAL
                 user.LastName = info.LastName;
                 user.MobileNumber = info.MobileNumber;
                 user.Email = info.Email;
-                //doctor.Picture
+                user.Picture = info.Picture;
                 doctor.CodeNezamPezeshki = info.CodeNezamPezeshki;
                 await db.SaveChangesAsync();
                 tran.Commit();

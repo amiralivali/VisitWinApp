@@ -65,7 +65,7 @@ namespace Visit.DAL
                 user.LastName = info.LastName;
                 user.MobileNumber = info.MobileNumber;
                 user.Email = info.Email;
-                //user.Picture=
+                user.Picture = info.Picture;
                 var bimar = db.Bimars.Where(b => b.BimarID == info.BimarID).Single();
                 bimar.NationalCode = info.NationalCode;
                 await db.SaveChangesAsync();

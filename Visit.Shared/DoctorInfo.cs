@@ -14,5 +14,6 @@ namespace Visit.Shared
         public string MobileNumber { get; set; }
         public string Email { get; set; }
         public string CodeNezamPezeshki { get; set; }
+        public byte[] Picture { get; set; }
     }
 }

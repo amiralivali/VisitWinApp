@@ -48,7 +48,7 @@ namespace Visit.BLL
                 {
                     return OprationResult.Duplicate(Messages.Mobile);
                 }
-                else if (string.IsNullOrEmpty(info.Email) == false && await repository.DuplicateEmailAsync(info.Email, info.DoctorID))
+                else if (checkEmail == false && await repository.DuplicateEmailAsync(info.Email, info.DoctorID))
                 {
                     return OprationResult.Duplicate(Messages.Email);
                 }
@@ -67,7 +67,7 @@ namespace Visit.BLL
                 {
                     return OprationResult.Duplicate(Messages.Mobile);
                 }
-                else if (string.IsNullOrEmpty(info.Email) == false && await repository.DuplicateEmailAsync(info.Email))
+                else if (checkEmail == false && await repository.DuplicateEmailAsync(info.Email))
                 {
                     return OprationResult.Duplicate(Messages.Email);
                 }

@@ -18,6 +18,7 @@ namespace Visit.DAL
                 LastName = info.LastName,
                 MobileNumber = info.MobileNumber,
                 Email = info.Email,
+                Picture = info.Picture,
             };
             return user;
         }
@@ -29,6 +30,7 @@ namespace Visit.DAL
                 LastName = info.LastName,
                 MobileNumber = info.MobileNumber,
                 Email = info.Email,
+                Picture = info.Picture,
             };
             return user;
         }
