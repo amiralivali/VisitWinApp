@@ -5,3 +5,7 @@
 /.vs
 /Visit.UI/bin/Debug
 /Visit.UI/obj
+/Visit.BLL/bin/Debug
+/Visit.BLL/obj
+/Visit.DAL/bin/Debug
+/Visit.DAL/obj
