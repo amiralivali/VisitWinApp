@@ -99,6 +99,11 @@ namespace Visit.DAL
                 return null;
             }
         }
+        public async Task<bool> ExistAsync(string Nezam, string Mobile)
+        {
+            bool exist = await db.Doctors.Where(b => b.CodeNezamPezeshki == Nezam && b.User.MobileNumber == Mobile).AnyAsync();
+            return exist;
+        }
         public async Task<bool> DuplicateMobileAsync(string mobile, int id = 0)
         {
             bool duplicate = false;

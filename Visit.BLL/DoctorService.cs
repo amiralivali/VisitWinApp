@@ -143,5 +143,10 @@ namespace Visit.BLL
                 return OprationResult<List<DoctorDto>>.RunTimeError();
             }
         }
+        public async Task<bool> ExistAsync(string Nezam, string Mobile)
+        {
+            bool exist = await repository.ExistAsync(Nezam, Mobile);
+            return exist;
+        }
     }
 }

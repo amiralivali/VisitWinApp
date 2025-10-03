@@ -101,6 +101,11 @@ namespace Visit.DAL
                 return null;
             }
         }
+        public async Task<bool> ExistAsync(string Nc,string Mobile)
+        {
+            bool exist = await db.Bimars.Where(b => b.NationalCode == Nc && b.User.MobileNumber == Mobile).AnyAsync();
+            return exist;
+        }
         public async Task<bool> DuplicateNationalCodeAsync(string nc, int bimarID = 0)
         {
             bool duplicate = false;

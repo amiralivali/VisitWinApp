@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visit.DAL", "Visit.DAL\Visi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visit.Shared", "Visit.Shared\Visit.Shared.csproj", "{DF62F9EC-3BFF-4EA3-B4C4-512BD03CCE72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visit.API", "Visit.API\Visit.API.csproj", "{2442F573-775F-45C1-945B-AC7C8208C677}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DF62F9EC-3BFF-4EA3-B4C4-512BD03CCE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF62F9EC-3BFF-4EA3-B4C4-512BD03CCE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF62F9EC-3BFF-4EA3-B4C4-512BD03CCE72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2442F573-775F-45C1-945B-AC7C8208C677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2442F573-775F-45C1-945B-AC7C8208C677}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2442F573-775F-45C1-945B-AC7C8208C677}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2442F573-775F-45C1-945B-AC7C8208C677}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

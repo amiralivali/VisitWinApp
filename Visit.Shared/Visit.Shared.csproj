@@ -49,6 +49,7 @@
     <Compile Include="Messages.cs" />
     <Compile Include="OprationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserRole.cs" />
     <Compile Include="ValidationLogic.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

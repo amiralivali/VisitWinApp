@@ -144,5 +144,10 @@ namespace Visit.BLL
                 return OprationResult<List<BimarDto>>.RunTimeError();
             }
         }
+        public async Task<bool> ExistAsync(string Nc, string Mobile)
+        {
+            bool exist = await repository.ExistAsync(Nc,Mobile);
+            return exist;
+        }
     }
 }
